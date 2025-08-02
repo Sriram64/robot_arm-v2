@@ -39,7 +39,7 @@ def calc_IK(x, z):
 	
 	th3_deg = psi - (th1_deg - (th2_deg))
 	
-	return (th1_deg, th2_deg, th3_deg)
+	return (th0, th1_deg, th2_deg, th3_deg)
 	
 x = calc_IK(xw, zw)
 print(x)
