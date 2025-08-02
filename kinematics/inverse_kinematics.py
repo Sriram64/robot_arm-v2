@@ -1,10 +1,5 @@
 import math as mt
 
-xt = float(input("enter x: "))
-yt = float(input("enter y: "))
-zt = float(input("enter z: ")) 
-zt = zt - 105.0
-
 l1 = 105
 l2 = 75
 l3 = 30
@@ -12,10 +7,20 @@ l3 = 30
 psi = 0 # orientation angle
 psi_rad = mt.radians(psi)
 
-xw = xt - (l3 * mt.cos(psi_rad))
-zw = zt - (l3 * mt.sin(psi_rad))
+def get_input():
 
-th0 = mt.atan2(yt, xt)
+    xt = float(input("enter x: "))
+    yt = float(input("enter y: "))
+    zt = float(input("enter z: ")) 
+    zt = zt - 105.0
+
+    xw = xt - (l3 * mt.cos(psi_rad))
+    zw = zt - (l3 * mt.sin(psi_rad))
+    
+    th0 = mt.atan2(yt, xt)
+
+    return th0, xw, zw
+
 
 def calc_IK(x, z):
 	#psi = 0
@@ -39,7 +44,5 @@ def calc_IK(x, z):
 	
 	th3_deg = psi - (th1_deg - (th2_deg))
 	
-	return (th0, th1_deg, th2_deg, th3_deg)
+	return th1_deg, th2_deg, th3_deg
 	
-x = calc_IK(xw, zw)
-print(x)
