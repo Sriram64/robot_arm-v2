@@ -1,24 +1,45 @@
-import math
+import math as mt
 
-a1 = 105
-a2 = 145
-d1 = 100
+xt = float(input("enter x: "))
+yt = float(input("enter y: "))
+zt = float(input("enter z: ")) 
+zt = zt - 105.0
 
-x = int(input("enter x: "))
-y = int(input("enter y: "))
-z = int(input("enter z: "))
-z1 = z - d1
+l1 = 105
+l2 = 75
+l3 = 30
 
-th1 = math.atan2(y, x)
+psi = 0 # orientation angle
+psi_rad = mt.radians(psi)
 
-th3 = math.acos((x**2 + z1**2 - (a1**2 + a2**2)) / (2*a1*a2))
+xw = xt - (l3 * mt.cos(psi_rad))
+zw = zt - (l3 * mt.sin(psi_rad))
 
-gamma = math.atan2(z1, x)
-beta = math.atan((a2*math.degrees(math.sin(th3))) / (a1 + (a2*math.degrees(math.cos(th3)))))
+th0 = mt.atan2(yt, xt)
 
-th2 = gamma + beta
+def calc_IK(x, z):
+	#psi = 0
 
-print("gamma: ", math.degrees(gamma))
-print("beta: ", math.degrees(beta))
+	h = mt.sqrt((x**2) + (z**2))
 
-print(math.degrees(th1), "\n", math.degrees(th2), "\n", math.degrees(th3), "\n")
+	alpha = mt.acos((((l1**2)+(l2**2))-(h**2))/(2 * l1 * l2))
+	th2 = mt.pi - alpha
+	alpha_deg = mt.degrees(alpha)
+	th2_deg = mt.degrees(th2)
+	
+	beta = mt.atan2(z, x)
+
+	c1 = l2 * mt.sin(th2)
+	c2 = l1 + (l2 * mt.cos(th2))
+
+	gamma = mt.atan2(c1, c2)
+
+	th1 = beta + gamma
+	th1_deg = mt.degrees(th1)
+	
+	th3_deg = psi - (th1_deg - (th2_deg))
+	
+	return (th1_deg, th2_deg, th3_deg)
+	
+x = calc_IK(xw, zw)
+print(x)
